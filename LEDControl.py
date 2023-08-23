@@ -1,4 +1,4 @@
-#Imports
+#imports
 import board
 import digitalio as dio
 import time
@@ -31,7 +31,8 @@ btn_dim.direction = dio.Direction.INPUT
 btn_bright = dio.DigitalInOut(board.D9)
 btn_bright.direction = dio.Direction.INPUT
 
-#Turning on lights
+led1.value = True
+#Code to turn on the lights
 def on():
    
    led1.value = not btn_on.value
@@ -44,8 +45,7 @@ def on():
    time.sleep(0.01)
 
 
-
-#Turning Light Off
+#Code to turn off the light
 def off():
    led1.value = btn_off.value
    time.sleep(0.01)
@@ -57,8 +57,7 @@ def off():
    time.sleep(0.01)    
    
     
-
-
+#Code to dim the lights
 def dim():
     for i in range(20):
         on = i
@@ -69,7 +68,7 @@ def dim():
             led.value = False
             time.sleep(off / 10000.0)
 	print(on)
-
+#Code to brighten the lights
 def brighten():
     for i in range(20):
         on = 100-i-1
@@ -84,4 +83,11 @@ def brighten():
 
 
 while True: 
-    if btn_on.value = True:
+    if btn_off.value == True:
+        off()
+    else:
+        on()
+	if btn_dim.value == False:
+		dim()
+	else if btn_bright.vlaue == False:
+		brighten()
