@@ -1,4 +1,3 @@
-#imports
 import board
 import digitalio as dio
 import time
@@ -31,63 +30,78 @@ btn_dim.direction = dio.Direction.INPUT
 btn_bright = dio.DigitalInOut(board.D9)
 btn_bright.direction = dio.Direction.INPUT
 
-led1.value = True
-#Code to turn on the lights
+led1.value = False
+led2.value = False
+led3.value = False
+led4.value = False
+stop = 0.001
+on = 100
+off = 100 - on
+#brigthness 
+
 def on():
-   
-   led1.value = not btn_on.value
-   time.sleep(0.01)
-   led2.value = not btn_on.value
-   time.sleep(0.01)
-   led3.value = not btn_on.value
-   time.sleep(0.01)
-   led4.value = not btn_on.value
-   time.sleep(0.01)
+    global on
+    on = 100
 
 
-#Code to turn off the light
+
 def off():
-   led1.value = btn_off.value
-   time.sleep(0.01)
-   led2.value = btn_off.value
-   time.sleep(0.01)
-   led3.value = btn_off.value
-   time.sleep(0.01)
-   led4.value = btn_off.value
-   time.sleep(0.01)    
-   
-    
-#Code to dim the lights
+    global on
+    on = 0    
+ 
+ 
+ 
 def dim():
-    for i in range(20):
-        on = i
-        off = 100 - on
-        for j in range(1):
-            led.value = True
-            time.sleep(on / 10000.0)
-            led.value = False
-            time.sleep(off / 10000.0)
-	print(on)
-#Code to brighten the lights
+    global on
+    if on < 0:
+        on = on - 20
+    
+
+
 def brighten():
-    for i in range(20):
-        on = 100-i-1
-        off = 100 - on
-        for j in range(1):
-            led.value = True
-            time.sleep(on / 10000.0)
-            led.value = False
-            time.sleep(off / 10000.0)
-    print(on)
+    global on
+    if on < 0:
+        on = on + 20
+        
 
 
-
-while True: 
-    if btn_off.value == True:
-        off()
-    else:
+while True:
+    if btn_on.value == False:
         on()
-	if btn_dim.value == False:
-		dim()
-	else if btn_bright.vlaue == False:
-		brighten()
+        print(on)
+        time.sleep(stop)
+        print(off)
+        time.sleep(stop)
+    time.sleep(stop)
+    if btn_off.value == False:
+        off()
+        print(on)
+        time.sleep(stop)
+        print(off)
+        time.sleep(stop)
+    time.sleep(stop)
+    if btn_dim.value == False:
+        dim()
+        print(on)
+        time.sleep(stop)
+        print(off)
+        time.sleep(stop)
+    if btn_bright.value == False:
+        brighten()
+        print(on)
+        time.sleep(stop)
+        print(off)
+        time.sleep(stop)
+    time.sleep(stop)
+    led1.value = True
+    led2.value = True
+    led3.value = True
+    led4.value = True            
+    time.sleep(on / 10000.0)
+    led1.value = not True
+    led2.value = not True
+    led3.value = not True
+    led4.value = not True
+    time.sleep(off / 10000.0)
+
+    
