@@ -1,0 +1,29 @@
+import time
+import board
+import neopixel
+
+np = neopixel.NeoPixel(board.NEOPIXEL, 1, auto_write = True, brightness = 0.2)
+
+while True:
+    red = 255
+    green = 0
+    blue = 0
+    color = [red,green,blue]
+    np.fill(color)
+    time.sleep(0.1)
+    print(color)
+    for i in range(256):
+        red = 255 - i
+        green = 0 + i
+        np.fill(color)
+        time.sleep(0.01)
+    for i in range(256):
+        green = 255 - i
+        blue = 0 + i
+        np.fill(color)
+        time.sleep(0.01)
+    for i in range(256):
+        blue = 255 - i
+        red = 0 + i
+        np.fill(color)
+        time.sleep(0.01)
