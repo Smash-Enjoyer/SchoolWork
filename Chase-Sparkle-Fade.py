@@ -2,11 +2,11 @@ import time
 import board
 import neopixel
 import random
-np = neopixel.NeoPixel(board.D2, 30, auto_write = False, brightness = 1)
+np = neopixel.NeoPixel(board.D2, 30, auto_write = False, brightness = 0.5)
 
 color = [255,156,127]
-speed = 6
-times = 1
+speed = 0.1
+times = 10
 def fadeOut(color, speed=1):
     if speed <= 0:
         speed = 1
@@ -23,7 +23,7 @@ def fadeOut(color, speed=1):
         np.fill(color1)
         np.show()
         print(color1)
-        time.sleep(1.0/(10*speed))
+        time.sleep(speed)
 def fadeIn(color, speed=1):
     if speed <= 0:
         speed = 1
@@ -40,19 +40,23 @@ def fadeIn(color, speed=1):
         color1[2] = int (fadeB*i)
         np.fill(color1)
         np.show()
-        time.sleep(1.0/(10*speed))
+        time.sleep(speed)
         print(color1)
-def chase(color = [0,0,0], speed = 1):
-    for j in range(30):
-        for i in range(0,30, 3):
-            led = (i+j)%30
-            np[led] = color
-            np[led - 1] = [0,0,0]
-            np[led - 2] = [0,0,0]
-            np.show()
-            time.sleep(1/(10*speed))
-def sparkle(color = [0,0,0], times = 1):
-    for i in range(times):
+def chase(times = 1, color = [0,0,0], speed = 0.1):
+    for j in range(times):
+        np.show()
+        for i in range(30):
+            if i % 3 != 0:
+                led = (i+j) % 30 
+                np[led] = [0,0,255]
+                print("bColor",i,np[i])
+            elif i % 3 == 0:
+                led = (i+j) % 30
+                np[led] = color
+                print("fColor",i,np[i])
+            time.sleep(speed)
+def sparkle(color = [0,0,0], tim = 1):
+    for i in range(tim):
         np.fill(color)
         led1 = random.randint(0, 28)
         led2 = random.randint(0, 28)
@@ -61,11 +65,12 @@ def sparkle(color = [0,0,0], times = 1):
         np[led2] = [12,124,42]
         np[led3] = [12,124,42]
         np.show()
-        time.sleep(.1)
+        print("sparkle")
+        time.sleep(0.01)
+
 
 while True:
     fadeIn(color, speed)
     fadeOut(color, speed)
-    sparkle(color, 10)
-    chase(color, speed)
-    chase(color, speed)
+    sparkle(color, times)
+    chase(times, color, speed)
