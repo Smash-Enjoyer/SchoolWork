@@ -50,7 +50,7 @@ def sequence(light_speed):
             led_r.value = True
             time.sleep(light_speed)
             led_r.value = False
-        if on_off.value == False:
+        if on_off.value == True:
             off = True
             game = False
         time.sleep(light_speed/2)
@@ -150,5 +150,5 @@ while True:
             if game:
                 points = add(points)
             #When game is wrong print out code but if it was turn off with off button reset game and don't print out any points.
-            elif off and not game:
+            elif not off and not game:
                 endgame(points, light_speed)
