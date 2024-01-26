@@ -52,6 +52,7 @@ def sequence(light_speed):
             led_r.value = False
         if on_off.value == False:
             off = True
+            game = False
         time.sleep(light_speed/2)
         
 #adds to the point count 
